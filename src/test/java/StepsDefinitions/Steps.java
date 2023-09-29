@@ -1,51 +1,52 @@
 package StepsDefinitions;
 
 import io.cucumber.java.Before;
-import io.cucumber.java.es.Cuando;
-import io.cucumber.java.es.Dado;
-import io.cucumber.java.es.Entonces;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import models.Data;
 import net.serenitybdd.screenplay.actors.OnlineCast;
-import questions.ValidarUsuario;
+import net.thucydides.core.model.DataTable;
+import questions.ValidateUser;
 import tasks.*;
+
+import java.util.List;
 
 import static net.serenitybdd.screenplay.actors.OnStage.*;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
+
 public class Steps {
 
-    @Before
-    public void configuracionInicial() {
-        setTheStage(new OnlineCast());
+
+    @Given("that Fredy wants to access the page")
+    public void that_fredy_wants_to_access_the_page() {
+        theActorCalled("actor").wasAbleTo(OpenPage.utest());
     }
 
-    @Dado("que Fredy quiere acceder a la pagina")
-    public void que_fredy_quiere_acceder_a_la_pagina() {
-        theActorCalled("actor").wasAbleTo(Abrir.lapagina());
+    @When("enter the form")
+    public void enter_the_form(List<Data> data) {
+        theActorInTheSpotlight().attemptsTo(FillOut.form(data));
     }
 
-    @Cuando("ingresa al formulario")
-    public void ingresa_al_formulario() {
-        theActorInTheSpotlight().attemptsTo(Diligenciar.formulario());
+    @When("look for my location")
+    public void look_for_my_location()  {
+        theActorInTheSpotlight().attemptsTo(Location.form());
     }
 
-    @Cuando("Diligencio mi localizacion")
-    public void diligencio_mi_localizacion() throws InterruptedException {
-        Thread.sleep(2000);
-        theActorInTheSpotlight().attemptsTo(Localizacion.formulario());
+    @When("Diligence characteristics of my PC")
+    public void diligence_characteristics_of_my_pc() {
+        theActorInTheSpotlight().attemptsTo(Devices.form());
     }
 
-    @Cuando("Diligencio caracteristicas de mi PC")
-    public void diligencio_caracteristicas_de_mi_pc() {
-        theActorInTheSpotlight().attemptsTo(Devices.formulario());
-    }
-
-    @Cuando("Diligencio mi contrasena")
-    public void diligencio_mi_contrasena() {
+    @When("I fill out my password")
+    public void i_fill_out_my_password() {
         theActorInTheSpotlight().attemptsTo(PassForm.final2());
     }
 
-
-    @Entonces("Valido la creación del usuario")
-    public void valido_la_creación_del_usuario() throws InterruptedException {
-        theActorInTheSpotlight().should(seeThat(ValidarUsuario.creado()));
+    @Then("I validate the user creation")
+    public void i_validate_the_user_creation() {
+        theActorInTheSpotlight().should(seeThat(ValidateUser.create()));
     }
+
+
 }

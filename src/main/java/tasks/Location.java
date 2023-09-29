@@ -5,21 +5,20 @@ import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Scroll;
+import userinterfaces.FormTwo;
 
-import static userinterfaces.FormThree.BTNNEXTLASTSTEP;
-
-public class Devices implements Task {
-
-
-    public static Devices form() {
-        return Tasks.instrumented(Devices.class);
+public class Location implements Task {
+    public static Location form() {
+        return Tasks.instrumented(Location.class);
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
 
         actor.attemptsTo(
-                Scroll.to(BTNNEXTLASTSTEP),
-                Click.on(BTNNEXTLASTSTEP));
+                Scroll.to(FormTwo.BTNNEXTDEVICES),
+                Click.on(FormTwo.BTNNEXTDEVICES)
+        );
+
     }
 }
