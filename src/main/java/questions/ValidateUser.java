@@ -2,7 +2,10 @@ package questions;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
-import userinterfaces.UserPage;
+import net.serenitybdd.screenplay.waits.WaitUntil;
+
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
+import static userinterfaces.UserPage.TITTLEUSUARIOCREADO;
 
 public class ValidateUser implements Question<Boolean> {
 
@@ -15,10 +18,10 @@ public class ValidateUser implements Question<Boolean> {
     @Override
     public Boolean answeredBy(Actor actor) {
 
-        UserPage.TITTLEUSUARIOCREADO.resolveFor(actor).waitUntilVisible();
+        actor.attemptsTo( WaitUntil.the(TITTLEUSUARIOCREADO, isClickable()).forNoMoreThan(60).seconds());
 
-        if (UserPage.TITTLEUSUARIOCREADO.resolveFor(actor).isDisplayed()) {
-            String texto = UserPage.TITTLEUSUARIOCREADO.resolveFor(actor).getText();
+        if (TITTLEUSUARIOCREADO.resolveFor(actor).isDisplayed()) {
+            String texto = TITTLEUSUARIOCREADO.resolveFor(actor).getText();
             String mensaje = "Welcome to the world's largest community of freelance software testers!";
             if (texto.equals(mensaje)) {
                 respuesta = true;
